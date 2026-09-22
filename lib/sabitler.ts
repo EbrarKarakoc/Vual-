@@ -38,4 +38,6 @@ export const SABLON_TIPLERI = [
 
 export const MAX_FOTO_MB = 10;
 export const MIN_FOTO_PIXEL = 512;
-export const STORAGE_BUCKET = "user-photos";
+
+// Kullanıcı fotoğrafı için storage bucket'ı bilerek tanımlı değil.
+// Kaynak fotoğraf hiçbir koşulda diske yazılmaz — bkz. docs/BRIEF.md.

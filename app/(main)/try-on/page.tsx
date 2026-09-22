@@ -97,6 +97,7 @@ export default function TryOnPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userPhotoDataUrl: photo.src,
+            productImage: cur.image,
             productName: cur.name,
             productStyle: cur.style,
             productColor: cur.color,

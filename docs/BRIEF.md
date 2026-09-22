@@ -164,8 +164,9 @@ Kod yazmadan önce güvenlik ağı ve hukuki zemin.
 boşa emek.
 
 - [ ] `/api/try-on`'u gerçek fotoğraflarla uçtan uca doğrula
-- [ ] **Ürün görselini de Gemini'ye gönder** — şu an sadece metin ipucu
-      gidiyor, gerçekçilik için görsel referans şart
+- [x] **Ürün görselini de Gemini'ye gönder** — metin ipucu tek başına
+      yetmiyordu, artık ürün fotoğrafı da referans olarak gidiyor
+- [x] Kalite testi altyapısı — `npm run deneme-testi`
 - [ ] Prompt iterasyonu: yüz kimliğinin korunması, kumaş dökümü, ışık uyumu
 - [ ] Fotoğraf kalite kapısı: çözünürlük, tek yüz, yüz açısı, ışık — kötü
       girdi kibarca reddedilir

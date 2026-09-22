@@ -28,6 +28,7 @@ npx tsc --noEmit         # tip kontrolü — commit öncesi çalıştır
 npm run prisma:generate  # Prisma client üret
 npm run prisma:migrate   # migration oluştur + uygula
 npm run seed             # prisma/seed.ts
+npm run deneme-testi     # test/yuzler x test/urunler kalite testi → test/sonuclar
 ```
 
 ---
@@ -69,6 +70,7 @@ components/
   layout/          Navbar, Logo
   ui/              button/card/input/sheet/skeleton — Tailwind + emerald
 lib/
+  gemini-client.ts deneme görseli üretimi — model değişirse değişecek TEK dosya
   studio-data.ts   ⚠ SAHTE ürün verisi (Faz 2'de DB ile değişecek)
   sabitler.ts      renk/kumaş/stil listeleri, yükleme limitleri
   oneri-motoru.ts  favori tabanlı öneri (DB bekliyor)
@@ -168,7 +170,9 @@ anlatan yorum yazma.
   migration sonrası doğrula.
 - `clarifai-client.ts` bir **URL** alıyor. Sıfır-saklama politikasında ortada
   URL yok — byte/base64 alacak şekilde değiştirilmesi gerekiyor (Faz 1).
-- `/api/try-on` şu an ürünün **görselini** Gemini'ye göndermiyor, sadece metin
-  ipucu (ad/stil/renk) veriyor. Gerçekçilik için ürün görseli de input olmalı.
+- `lib/studio-data.ts` ürün görselleri **picsum.photos**'tan geliyor, yani
+  başörtüsü değil rastgele stok fotoğraf. `/api/try-on` artık ürün görselini
+  de Gemini'ye gönderdiği için, sahte veriyle yapılan test **anlamsızdır** —
+  gerçek ürün fotoğrafıyla `npm run deneme-testi` kullan.
 - Deneme sonucu 60 sn sürebilir (`maxDuration = 60`). Vercel Hobby planında
   limit daha düşük; deploy öncesi kontrol et.

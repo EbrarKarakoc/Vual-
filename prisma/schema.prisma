@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  name            String?
+  avatarUrl       String?   @map("avatar_url")
+  photoUrl        String?   @map("photo_url")
+  photoProcessed  Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  templates       UserTemplate[]
+  favorites       Favorite[]
+  tryOnResults    TryOnResult[]
+  interactions    Interaction[]
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  name          String
+  description   String?
+  colorHex      String   @map("color_hex")
+  colorName     String   @map("color_name")
+  fabricType    String   @map("fabric_type")
+  style         String
+  price         Decimal
+  currency      String   @default("TRY")
+  imageUrls     String[] @map("image_urls")
+  affiliateUrl  String   @map("affiliate_url")
+  brand         String?
+  inStock       Boolean  @default(true)
+  embedding     Unsupported("vector(384)")?
+  createdAt     DateTime @default(now())
+
+  favorites     Favorite[]
+  tryOnResults  TryOnResult[]
+  interactions  Interaction[]
+}
+
+model UserTemplate {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  templateType  String   @map("template_type")
+  imageUrl      String   @map("image_url")
+  isSelected    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  productId String   @map("product_id")
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model TryOnResult {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  productId   String   @map("product_id")
+  templateId  String   @map("template_id")
+  resultUrl   String   @map("result_url")
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Interaction {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  productId String   @map("product_id")
+  type      String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}

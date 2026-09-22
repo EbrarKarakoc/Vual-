@@ -1,0 +1,24 @@
+# Bağımlılıklar
+node_modules
+
+# Next.js build çıktıları
+.next
+out
+dist
+next-env.d.ts
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Ortam değişkenleri — .env.example dışında hiçbiri commit edilmez
+.env
+.env.local
+.env*.local
+
+# Loglar / OS / deploy
+*.log
+.DS_Store
+.vercel
+
+# NOT: prisma/migrations BİLEREK ignore edilmiyor.
+# Migration dosyaları şema geçmişidir ve commit edilmek zorundadır.

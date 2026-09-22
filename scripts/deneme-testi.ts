@@ -48,10 +48,39 @@ function dataUrlOku(yol: string): string {
   return `data:${MIME[uzanti]};base64,${readFileSync(yol).toString("base64")}`;
 }
 
+/** Ücretsiz katmanda görsel modeli tamamen kapalıdır; tekrar denemek işe yaramaz. */
+class FaturaKapali extends Error {}
+
+const bekle = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+function kisalt(mesaj: string): string {
+  return mesaj.split("\n")[0].slice(0, 160);
+}
+
 async function main() {
   envYukle();
 
-  const { denemeGorseliUret } = await import("../lib/gemini-client");
+  const { denemeGorseliUret, DenemeHatasi } = await import("../lib/gemini-client");
+
+  /** Hız limitinde artan aralıklarla 3 kez dener. */
+  async function denemeYap(girdi: Parameters<typeof denemeGorseliUret>[0]) {
+    for (let deneme = 1; ; deneme++) {
+      try {
+        return await denemeGorseliUret(girdi);
+      } catch (err) {
+        if (err instanceof DenemeHatasi && /limit:\s*0/.test(err.message)) {
+          throw new FaturaKapali(err.message);
+        }
+        if (err instanceof DenemeHatasi && err.durum === 429 && deneme < 3) {
+          const saniye = 10 * deneme;
+          process.stdout.write(`hız limiti, ${saniye}s bekleniyor... `);
+          await bekle(saniye * 1000);
+          continue;
+        }
+        throw err;
+      }
+    }
+  }
 
   const yuzler = gorselleriListele(YUZLER);
   const urunler = gorselleriListele(URUNLER);
@@ -80,7 +109,7 @@ async function main() {
 
       const basladi = Date.now();
       try {
-        const sonuc = await denemeGorseliUret({
+        const sonuc = await denemeYap({
           kullaniciFotografi: dataUrlOku(join(YUZLER, yuz)),
           urunGorseli: dataUrlOku(join(URUNLER, urun)),
           urunAdi: basename(urun, extname(urun)),
@@ -92,7 +121,16 @@ async function main() {
         basarili++;
         console.log(`tamam (${((Date.now() - basladi) / 1000).toFixed(1)}s)`);
       } catch (err) {
-        const mesaj = err instanceof Error ? err.message : String(err);
+        if (err instanceof FaturaKapali) {
+          console.error(
+            "\n\nÜcretsiz katmanda görsel üretim modeli kapalı (limit: 0).\n" +
+              "aistudio.google.com üzerinden faturalandırmayı aç, sonra tekrar çalıştır.\n" +
+              "Tekrar denemenin faydası yok, test durduruldu."
+          );
+          process.exitCode = 1;
+          return;
+        }
+        const mesaj = err instanceof Error ? kisalt(err.message) : String(err);
         hatalar.push(`${ad}: ${mesaj}`);
         console.log(`HATA — ${mesaj}`);
       }

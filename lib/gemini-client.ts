@@ -166,7 +166,9 @@ export async function denemeGorseliUret(girdi: DenemeGirdisi): Promise<string> {
   }
 
   if (!res.ok) {
-    throw new DenemeHatasi(veri?.error?.message ?? `HTTP ${res.status}`, 502);
+    // Durum kodu aynen geçer: 429 (hız limiti) ile 400 (hatalı istek) farklı
+    // ele alınmalı, ikisini birden 502'ye çevirmek bilgi kaybı.
+    throw new DenemeHatasi(veri?.error?.message ?? `HTTP ${res.status}`, res.status);
   }
 
   const engel = veri.promptFeedback?.blockReason;

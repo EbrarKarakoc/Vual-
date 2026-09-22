@@ -1,4 +1,4 @@
-# Yakıştır
+# Vualà
 
 **Başörtüsünü almadan önce, kendi yüzünde dene.**
 
@@ -6,7 +6,7 @@ Aynı şal her yüzde aynı durmuyor. Ten tonuna, yüz hattına, bağlama şekli
 bambaşka bir şey oluyor. Ekranda mankenin üzerinde beğendiğin örtü, sana
 geldiğinde beklediğin gibi çıkmıyor.
 
-Yakıştır bunu çözüyor: kendi fotoğrafını yükle, yüzlerce başörtüsünü üzerinde
+Vualà bunu çözüyor: kendi fotoğrafını yükle, yüzlerce başörtüsünü üzerinde
 gör, kararını ondan sonra ver.
 
 ---
@@ -48,7 +48,7 @@ tasarladık: mahremiyetin, kolaylıktan önce geliyor.
 Fiziksel mağazan yoksa müşterin ürünü hiç deneyemeden karar vermek zorunda
 kalıyor. Sonuç: tereddüt, düşük dönüşüm ve yüksek iade.
 
-Yakıştır ürünlerini kendi katalog sayfandan çıkarmadan, müşterinin kendi
+Vualà ürünlerini kendi katalog sayfandan çıkarmadan, müşterinin kendi
 yüzünde denenebilir hale getiriyor. Satın alma senin sitende tamamlanıyor.
 
 İş birliği için iletişime geç.

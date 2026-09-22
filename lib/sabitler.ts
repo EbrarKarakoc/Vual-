@@ -1,4 +1,4 @@
-export const SITE_NAME = "Başörtü Dene";
+export const SITE_NAME = "Vualà";
 export const SITE_DESCRIPTION =
   "Fotoğrafını yükle, yüzlerce başörtüyü dene, beğendiğini al.";
 

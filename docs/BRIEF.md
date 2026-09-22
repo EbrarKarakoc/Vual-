@@ -1,4 +1,4 @@
-# Başörtü Dene — Ürün Brifingi, Kurallar ve Yol Haritası
+# Vualà — Ürün Brifingi, Kurallar ve Yol Haritası
 
 Son güncelleme: 22 Eylül 2026
 

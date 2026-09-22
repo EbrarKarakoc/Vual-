@@ -270,7 +270,11 @@ Expo istemci. Doğrulama olmadan başlanmaz.
 
 Karar verilmesi gereken, henüz cevabı olmayan başlıklar:
 
-- Gemini deneme başına maliyeti ne? Ücretsiz deneme hakkı kaç olacak?
+- ~~Gemini deneme başına maliyeti ne?~~ **Cevaplandı (22 Eylül 2026):**
+  görsel başına **$0.039** (batch/flex modunda $0.0195). Ücretsiz katmanda
+  görsel üretimi yok, faturalandırma zorunlu. Açık kalan kısım: kullanıcı
+  başına kaç bedava deneme hakkı verilecek? Affiliate komisyonu deneme
+  maliyetini karşılamak zorunda — bu bir iş kararı, Faz 2'de ölçülecek.
 - Satıcılarla affiliate anlaşması nasıl kurulacak — mevcut programlar mı,
   doğrudan görüşme mi?
 - Ürün görsellerini kendi sunucumuzda mı barındıracağız, satıcının

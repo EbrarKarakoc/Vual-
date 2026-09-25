@@ -7,6 +7,10 @@
  * dener ve sonucu test/sonuclar/ altına yazar. Faz 1'in çıkış kriterini
  * (20 fotoğraf, bağımsız değerlendirme) elle tıklamadan ölçebilmek için.
  *
+ * Ürün tipi prompt'un bağlama şeklini belirlediği için ürün dosyasının adı
+ * tipiyle başlamalı: "sal-viona.jpg", "esarp-bahar.png". Tipsiz dosyalar
+ * atlanır — uygulamada da tipi belirlenmemiş ürün yayına çıkmıyor.
+ *
  * test/ klasörü gitignore'dadır — yüz fotoğrafları repoya girmez.
  */
 
@@ -41,6 +45,11 @@ function gorselleriListele(klasor: string): string[] {
   return readdirSync(klasor)
     .filter((f) => GORSEL_UZANTILARI.has(extname(f).toLowerCase()))
     .sort();
+}
+
+function tipOku(dosya: string): "sal" | "esarp" | null {
+  const m = dosya.match(/^(sal|esarp)-/i);
+  return m ? (m[1].toLowerCase() as "sal" | "esarp") : null;
 }
 
 function dataUrlOku(yol: string): string {
@@ -83,7 +92,16 @@ async function main() {
   }
 
   const yuzler = gorselleriListele(YUZLER);
-  const urunler = gorselleriListele(URUNLER);
+  const tumUrunler = gorselleriListele(URUNLER);
+  const urunler = tumUrunler.filter((u) => tipOku(u));
+  const tipsiz = tumUrunler.filter((u) => !tipOku(u));
+  if (tipsiz.length) {
+    console.warn(
+      `Tipi olmayan ${tipsiz.length} ürün atlandı (adı "sal-" veya "esarp-" ile başlamalı):\n` +
+        tipsiz.map((u) => `  ${u}`).join("\n") +
+        "\n"
+    );
+  }
 
   if (!yuzler.length || !urunler.length) {
     console.error(
@@ -111,6 +129,7 @@ async function main() {
       try {
         const sonuc = await denemeYap({
           kullaniciFotografi: dataUrlOku(join(YUZLER, yuz)),
+          urunTipi: tipOku(urun)!,
           urunGorseli: dataUrlOku(join(URUNLER, urun)),
           urunAdi: basename(urun, extname(urun)),
         });

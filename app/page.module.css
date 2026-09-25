@@ -1,0 +1,274 @@
+.dolu {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- açılış ---------- */
+.acilis {
+  position: relative;
+  height: max(780px, 100svh);
+  overflow: hidden;
+  color: var(--pudra);
+  background: #5a1122;
+}
+.acilisFoto {
+  position: absolute;
+  inset: -40px 0 0 0;
+}
+.acilisFoto :global(.fig) {
+  width: 92%;
+  opacity: 0.28;
+}
+.perde {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--scrim) 0%, rgba(68, 8, 20, 0) 62%);
+}
+.acilisMetin {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 96px;
+}
+.acilisBaslik {
+  font-size: 54px;
+  line-height: 0.96;
+  margin: 0 0 20px;
+  color: var(--pudra);
+}
+.acilisAlt :global(.vu-lead) {
+  color: var(--pudra);
+  margin-bottom: 28px;
+  max-width: 320px;
+}
+.hemenDene {
+  display: flex;
+  width: 100%;
+}
+.ipucu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  text-align: center;
+  font: 500 10px/1 var(--font-sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.ipucu b {
+  display: block;
+  width: 1px;
+  height: 28px;
+  margin: 10px auto 0;
+  background: var(--pudra);
+  animation: vu-cue 2.4s ease-in-out infinite;
+}
+
+/* ---------- model şeridi ---------- */
+.serit {
+  padding: 56px 0 48px;
+  overflow: hidden;
+}
+.seritBaslik {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--gutter);
+  margin-bottom: -26px;
+  max-width: 330px;
+  box-sizing: content-box;
+}
+
+/* ---------- büyüyen fotoğraf ---------- */
+.buyume {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+}
+.cerceve {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.cerceve :global(.fig) {
+  width: 86%;
+}
+.buyumeMetin {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 40px;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--pudra);
+}
+
+/* ---------- lookbook çifti (sadece mobil) ---------- */
+.cift {
+  position: relative;
+  padding: 72px var(--gutter) 96px;
+}
+.cift > :global(.vu-label) {
+  margin: 0 0 24px;
+}
+.ciftBuyuk {
+  width: 72%;
+}
+.ciftKucuk {
+  width: 46%;
+  margin: -120px 0 0 auto;
+}
+.ciftBaslik {
+  position: relative;
+  margin-top: -40px;
+  max-width: 300px;
+}
+
+/* ---------- nasıl çalışır ---------- */
+.nasil {
+  padding: 72px var(--gutter);
+}
+.nasil > :global(.vu-label) {
+  margin: 0 0 40px;
+}
+.adimlar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.adim {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+.adim > div {
+  order: -1;
+}
+.adim:nth-child(even) > div {
+  order: 1;
+}
+.adim:nth-child(even) > :global(.vu-ph) {
+  margin-bottom: 40px;
+}
+.numara {
+  display: block;
+  font: italic 300 72px/0.9 var(--font-display);
+  color: var(--sarap);
+}
+.adim p {
+  margin: 10px 0 0;
+  font: italic 400 24px/1.15 var(--font-display);
+}
+
+@media (min-width: 900px) {
+  .acilis {
+    height: max(900px, 100vh);
+  }
+  .acilisFoto :global(.fig) {
+    width: 40%;
+    opacity: 0.3;
+  }
+  .acilisMetin {
+    bottom: 110px;
+  }
+  .acilisBaslik {
+    font-size: clamp(96px, 9.5vw, 136px);
+    line-height: 0.92;
+    max-width: 1100px;
+    margin-bottom: 40px;
+  }
+  .acilisAlt {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .acilisAlt :global(.vu-lead) {
+    max-width: 420px;
+    font-size: 19px;
+    line-height: 30px;
+    margin: 0;
+  }
+  .hemenDene {
+    display: inline-flex;
+    width: auto;
+  }
+  .ipucu {
+    bottom: 28px;
+  }
+  .ipucu b {
+    height: 34px;
+  }
+
+  .serit {
+    padding: 140px 0 120px;
+  }
+  .seritBaslik {
+    max-width: none;
+    margin-bottom: -56px;
+  }
+
+  .buyume {
+    height: 900px;
+    display: grid;
+    place-items: center;
+  }
+  .cerceve {
+    inset: calc(80px * (1 - var(--p, 0))) calc(180px * (1 - var(--p, 0)));
+  }
+  .cerceve :global(.fig) {
+    width: 40%;
+  }
+  .buyumeMetin {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    font-size: 96px;
+    line-height: 0.95;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .cift {
+    display: none;
+  }
+
+  .nasil {
+    padding: 160px var(--gutter);
+  }
+  .nasil > :global(.vu-label) {
+    margin-bottom: 56px;
+  }
+  .adimlar {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+  .adim {
+    display: block;
+    margin: 0;
+  }
+  .adim:nth-child(1) {
+    grid-column: 1 / 5;
+  }
+  .adim:nth-child(2) {
+    grid-column: 6 / 9;
+    margin-top: 180px;
+  }
+  .adim:nth-child(3) {
+    grid-column: 10 / 13;
+    margin-top: 60px;
+  }
+  .adim:nth-child(even) > :global(.vu-ph) {
+    margin-bottom: 0;
+  }
+  .numara {
+    position: relative;
+    font-size: 120px;
+    margin: -60px 0 0 -8px;
+  }
+  .adim p {
+    margin-top: 14px;
+    font-size: 32px;
+    line-height: 1.1;
+  }
+}

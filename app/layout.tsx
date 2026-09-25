@@ -1,52 +1,51 @@
-import type { Metadata } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
-import { Toaster } from "sonner";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
-import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/sabitler";
-import { StudioProvider } from "@/components/studio/StudioProvider";
+import { Hareket } from "@/components/Hareket";
+import { DenemeBaglami } from "@/components/deneme/DenemeBaglami";
 
-const sans = Inter({
+const display = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-sans",
+  variable: "--font-display",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
-});
-
-const serif = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-serif",
-  display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500"],
   style: ["normal", "italic"],
 });
 
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+const sans = Jost({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500"],
+  weight: ["300", "400", "500"],
 });
 
+const ACIKLAMA = "Yapay zekâ ile kendi fotoğrafında dene, beğenirsen markasından al.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
-    default: `${SITE_NAME} — Başörtünü Dene, Beğendiğini Al`,
-    template: `%s | ${SITE_NAME}`,
+    default: "Vualà — Başörtünü dijitalde dene",
+    template: "%s · Vualà",
   },
-  description: SITE_DESCRIPTION,
+  description: ACIKLAMA,
   openGraph: {
-    title: SITE_NAME,
-    description: SITE_DESCRIPTION,
+    title: "Vualà",
+    description: ACIKLAMA,
     locale: "tr_TR",
     type: "website",
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#440814",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
-      <body className="min-h-screen" style={{ background: "var(--bg)", color: "var(--ink)" }}>
-        <StudioProvider>{children}</StudioProvider>
-        <Toaster position="top-center" richColors />
+    <html lang="tr" className={`${display.variable} ${sans.variable}`}>
+      <body>
+        <DenemeBaglami>{children}</DenemeBaglami>
+        <Hareket />
       </body>
     </html>
   );

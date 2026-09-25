@@ -1,3 +1,7 @@
+// Hesap yok: kullanıcıya ait hiçbir tablo tutulmaz (BRIEF K1, K2).
+// Katalog şu an lib/katalog.ts içinde sahte veriyle çalışıyor; bu şema Faz 2'de
+// migrate edilip o verinin yerini alacak.
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,87 +12,48 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id              String    @id @default(uuid())
-  email           String    @unique
-  name            String?
-  avatarUrl       String?   @map("avatar_url")
-  photoUrl        String?   @map("photo_url")
-  photoProcessed  Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  templates       UserTemplate[]
-  favorites       Favorite[]
-  tryOnResults    TryOnResult[]
-  interactions    Interaction[]
+enum UrunTipi {
+  sal
+  esarp
 }
 
-model Product {
-  id            String   @id @default(uuid())
-  slug          String   @unique
-  name          String
-  description   String?
-  colorHex      String   @map("color_hex")
-  colorName     String   @map("color_name")
-  fabricType    String   @map("fabric_type")
-  style         String
-  price         Decimal
-  currency      String   @default("TRY")
-  imageUrls     String[] @map("image_urls")
-  affiliateUrl  String   @map("affiliate_url")
-  brand         String?
-  inStock       Boolean  @default(true)
-  embedding     Unsupported("vector(384)")?
-  createdAt     DateTime @default(now())
+model Marka {
+  id         String   @id // "tugba" gibi okunur kimlik, URL'de kullanılır
+  ad         String
+  /// Türkçe ek uyumu yabancı isimlerde hesaplanamıyor: "'taki", "'ın"
+  bulunmaEki String   @map("bulunma_eki")
+  iyelikEki  String   @map("iyelik_eki")
+  /// Ana sayfa başlığının nesnesi: "şalları", "eşarpları"
+  vitrin     String
+  olusturma  DateTime @default(now()) @map("olusturma")
 
-  favorites     Favorite[]
-  tryOnResults  TryOnResult[]
-  interactions  Interaction[]
+  urunler Urun[]
+
+  @@map("markalar")
 }
 
-model UserTemplate {
-  id            String   @id @default(uuid())
-  userId        String   @map("user_id")
-  templateType  String   @map("template_type")
-  imageUrl      String   @map("image_url")
-  isSelected    Boolean  @default(false)
-  createdAt     DateTime @default(now())
+model Urun {
+  id          String   @id // slug
+  markaId     String   @map("marka_id")
+  ad          String
+  /// Satıcı açıklamasından alınır, fotoğraftan tahmin edilmez
+  tip         UrunTipi
+  kumas       String
+  olcu        String
+  renk        String
+  fiyat       Decimal  @db.Decimal(10, 2)
+  paraBirimi  String   @default("TRY") @map("para_birimi")
+  aciklama    String
+  urunUrl     String   @unique @map("urun_url")
+  gorseller   String[]
+  /// İnsan onayından geçmeyen ürün yayına çıkmaz (BRIEF Faz 2)
+  onaylandi   Boolean  @default(false)
+  embedding   Unsupported("vector(384)")?
+  olusturma   DateTime @default(now()) @map("olusturma")
+  guncelleme  DateTime @updatedAt @map("guncelleme")
 
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+  marka Marka @relation(fields: [markaId], references: [id])
 
-model Favorite {
-  id        String   @id @default(uuid())
-  userId    String   @map("user_id")
-  productId String   @map("product_id")
-  createdAt DateTime @default(now())
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, productId])
-}
-
-model TryOnResult {
-  id          String   @id @default(uuid())
-  userId      String   @map("user_id")
-  productId   String   @map("product_id")
-  templateId  String   @map("template_id")
-  resultUrl   String   @map("result_url")
-  createdAt   DateTime @default(now())
-
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-}
-
-model Interaction {
-  id        String   @id @default(uuid())
-  userId    String   @map("user_id")
-  productId String   @map("product_id")
-  type      String
-  createdAt DateTime @default(now())
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  @@index([markaId])
+  @@map("urunler")
 }

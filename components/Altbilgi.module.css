@@ -1,0 +1,38 @@
+.altbilgi {
+  padding: 64px var(--gutter) 48px;
+}
+.altbilgi :global(.vu-logo) {
+  font-size: 40px;
+  color: var(--pudra);
+}
+.altbilgi p {
+  margin: 20px 0 32px;
+  max-width: 300px;
+  color: var(--ink-on-deep-muted);
+  font-size: 14px;
+  line-height: 22px;
+}
+.altbilgi nav {
+  display: flex;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .altbilgi {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
+    gap: 48px;
+    padding: 96px var(--gutter) 64px;
+  }
+  .altbilgi :global(.vu-logo) {
+    font-size: 72px;
+  }
+  .altbilgi p {
+    margin: 0;
+    max-width: 380px;
+  }
+  .altbilgi nav {
+    gap: 32px;
+  }
+}

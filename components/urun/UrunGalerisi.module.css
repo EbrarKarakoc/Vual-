@@ -1,0 +1,39 @@
+.serit {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.serit::-webkit-scrollbar {
+  display: none;
+}
+.kare {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+.noktalar {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 14px 0 0;
+}
+.noktalar i {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+}
+.noktalar i.acik {
+  background: var(--ahududu);
+}
+
+@media (min-width: 900px) {
+  .serit {
+    flex-direction: column;
+    gap: 24px;
+    overflow: visible;
+  }
+  .noktalar {
+    display: none;
+  }
+}

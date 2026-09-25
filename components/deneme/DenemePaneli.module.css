@@ -1,0 +1,335 @@
+.ortu {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(68, 8, 20, 0.6);
+  animation: belir 0.35s ease;
+}
+.panel {
+  position: relative;
+  width: 100%;
+  max-height: 94dvh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: var(--radius-soft) var(--radius-soft) 0 0;
+  outline: none;
+  animation: yuksel 0.5s var(--ease);
+}
+.panelKoyu {
+  background: var(--bordo);
+  overflow: hidden;
+}
+.kapat {
+  position: absolute;
+  top: 16px;
+  right: var(--space-5);
+  z-index: 3;
+  font-size: 11px;
+}
+.panelKoyu .kapat {
+  color: var(--pudra);
+}
+.icerik {
+  padding: 12px var(--space-5) var(--space-6);
+}
+.tutma {
+  width: 36px;
+  height: 3px;
+  margin: 0 auto 20px;
+  background: var(--line);
+}
+.icerik > :global(.vu-label) {
+  margin: 0 0 8px;
+  padding-right: 64px;
+}
+.baslik {
+  margin: 0 0 24px;
+}
+
+.birak {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 230px;
+  border: 1px solid var(--line-strong);
+  background: var(--pudra);
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+.birak:hover {
+  background: #f6cfd3;
+}
+.birak:focus-within {
+  outline: 2px solid var(--ahududu);
+  outline-offset: 3px;
+}
+.birak svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--sarap);
+  fill: none;
+  stroke-width: 1.25;
+  margin-bottom: 6px;
+}
+.buyukYazi {
+  font: italic 500 26px/1.1 var(--font-display);
+}
+.kamera {
+  display: none;
+}
+@media (pointer: coarse) {
+  .kamera {
+    display: flex;
+  }
+}
+.mevcut {
+  height: 230px;
+  margin-bottom: 10px;
+  background: var(--pudra);
+}
+.mevcut img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ikinci {
+  margin-top: 10px;
+}
+.hata {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: var(--pudra);
+  color: var(--bordo);
+}
+.uyari {
+  margin: 16px 0 20px;
+  padding-left: 14px;
+  color: var(--ink);
+}
+.uyari::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ahududu);
+  margin: 0 8px 1px -14px;
+  vertical-align: middle;
+}
+.ipuclari {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  counter-reset: ipucu;
+}
+.ipuclari li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.ipuclari li::before {
+  content: counter(ipucu, decimal-leading-zero);
+  counter-increment: ipucu;
+  font: italic 18px/1 var(--font-display);
+  color: var(--sarap);
+  margin-right: 14px;
+}
+.gizlilik {
+  text-align: center;
+  margin: 0;
+}
+
+/* ---------- bekleme ---------- */
+.bekle {
+  position: relative;
+  height: min(720px, 94dvh);
+  overflow: hidden;
+  background: var(--bordo);
+}
+.bekleArka {
+  position: absolute;
+  inset: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  max-width: none;
+  object-fit: cover;
+  filter: blur(18px);
+  transform: scale(1.06);
+}
+.bekleOrtu {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+}
+.bekleUrun {
+  position: absolute;
+  left: 50%;
+  top: 120px;
+  width: 190px;
+  transform: translateX(-50%);
+  outline: 1px solid rgba(255, 249, 248, 0.5);
+  outline-offset: 6px;
+}
+.bekleAlt {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  bottom: 56px;
+  color: var(--pudra);
+  text-align: center;
+}
+.mesaj {
+  font: italic 400 30px/1.15 var(--font-display);
+  margin: 0 0 22px;
+  animation: belir 0.6s ease;
+}
+.cizgi {
+  height: 1px;
+  background: rgba(249, 219, 221, 0.3);
+}
+.cizgi b {
+  display: block;
+  height: 1px;
+  background: var(--pudra);
+  transition: width 1.4s cubic-bezier(0.3, 0.6, 0.2, 1);
+}
+.sure {
+  margin: 16px 0 0;
+  opacity: 0.85;
+}
+
+/* ---------- sonuç ---------- */
+.karsilastir {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 62dvh;
+  margin: 28px auto 0;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  background: var(--pudra);
+}
+.karsilastir img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.once {
+  position: absolute;
+  inset: 0;
+}
+.tutamac {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--kirik-beyaz);
+  outline: none;
+}
+.tutamac span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--kirik-beyaz);
+  color: var(--bordo);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+.tutamac:focus-visible span {
+  outline: 2px solid var(--ahududu);
+  outline-offset: 3px;
+}
+.yzEtiketi {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 5px 9px;
+  background: var(--ahududu);
+  color: var(--on-action);
+  font: 500 10px/14px var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.taraf {
+  position: absolute;
+  bottom: 12px;
+  padding: 3px 8px;
+  background: rgba(255, 249, 248, 0.9);
+  color: var(--bordo);
+}
+.sol {
+  left: 10px;
+}
+.sag {
+  right: 10px;
+}
+.eylemler {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 22px;
+}
+.eylemler > :global(.vu-label) {
+  margin: 0 0 6px;
+}
+.not {
+  margin: -2px 0 4px;
+  text-align: center;
+}
+.indir {
+  align-self: center;
+  margin-top: 8px;
+}
+
+@keyframes belir {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes yuksel {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .ortu {
+    align-items: center;
+  }
+  .panel {
+    width: 460px;
+    max-height: 92vh;
+    border-radius: 0;
+  }
+  .icerik {
+    padding: 32px;
+  }
+  .tutma {
+    display: none;
+  }
+  .kapat {
+    top: 32px;
+    right: 32px;
+  }
+  .birak {
+    height: 280px;
+  }
+}

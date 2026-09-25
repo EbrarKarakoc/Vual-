@@ -1,0 +1,72 @@
+/* Mobilde "contents": alttaki sabit butonlar galeri boyunca da görünsün diye
+   yapışkanlık kapsayıcısı <main> olur. */
+.bilgi {
+  display: contents;
+}
+.bilgi > :global(.vu-label) {
+  margin: 28px var(--gutter) 10px;
+}
+.ad {
+  margin: 0 var(--gutter);
+}
+.fiyat {
+  margin: 12px var(--gutter) 18px;
+  font-size: 15px;
+}
+.aciklama {
+  margin: 0 var(--gutter) 24px;
+}
+.ozellikler {
+  margin: 0 var(--gutter) 32px;
+  border-top: 1px solid var(--line);
+}
+.ozellikler div {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ozellikler dt {
+  align-self: center;
+}
+.ozellikler dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (min-width: 900px) {
+  .sayfa {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 96px;
+    padding: 24px var(--gutter) var(--space-9);
+  }
+  .bilgi {
+    display: block;
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    padding-top: 80px;
+    max-width: 440px;
+  }
+  .bilgi > :global(.vu-label) {
+    margin: 0 0 12px;
+  }
+  .ad {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1;
+  }
+  .fiyat {
+    margin: 20px 0 28px;
+  }
+  .aciklama {
+    margin: 0;
+  }
+  .ozellikler {
+    margin: 28px 0 40px;
+  }
+}

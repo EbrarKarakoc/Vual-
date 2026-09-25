@@ -12,6 +12,7 @@ Başörtüsü satan sitelerin ürünlerini tek yerde toplayan, kullanıcının k
 yüz/boyun fotoğrafı üzerinde bu başörtülerini **yapay zekâ ile denemesini**
 sağlayan, beğendiğinde satıcının sitesine yönlendiren mobil öncelikli web
 uygulaması. Gelir modeli affiliate — biz satmıyoruz, satışa aracılık ediyoruz.
+**Hesap yok:** kullanıcı kayıt olmadan dener.
 
 Ürünün kalbi iki şey: **görüntü gerçekçiliği** ve **fotoğraf mahremiyeti**.
 İkisinden biri bozulursa ürünün var olma sebebi kalmaz.
@@ -23,13 +24,15 @@ uygulaması. Gelir modeli affiliate — biz satmıyoruz, satışa aracılık edi
 ```bash
 npm run dev              # geliştirme sunucusu (localhost:3000)
 npm run build            # üretim derlemesi
-npm run lint             # eslint
 npx tsc --noEmit         # tip kontrolü — commit öncesi çalıştır
 npm run prisma:generate  # Prisma client üret
 npm run prisma:migrate   # migration oluştur + uygula
-npm run seed             # prisma/seed.ts
+npm run seed             # lib/katalog.ts verisini DB'ye yazar
 npm run deneme-testi     # test/yuzler x test/urunler kalite testi → test/sonuclar
 ```
+
+`npm run lint` henüz yapılandırılmadı (ESLint yapılandırması yok, komut
+etkileşimli kurulum soruyor).
 
 ---
 
@@ -38,12 +41,11 @@ npm run deneme-testi     # test/yuzler x test/urunler kalite testi → test/sonu
 | Katman | Teknoloji |
 |---|---|
 | Framework | Next.js 14 (App Router), React 18, TypeScript |
-| Stil | Tailwind + `app/globals.css` içindeki CSS değişkenleri |
-| Veritabanı | Supabase Postgres (+ `vector` eklentisi), Prisma şema katmanı |
-| Kimlik | Supabase Auth *(şu an devre dışı — aşağıya bak)* |
-| Deneme görseli | Google Gemini 2.5 Flash Image (`gemini-2.5-flash-image`) |
-| İçerik denetimi | Clarifai moderation |
-| Görsel işleme | sharp |
+| Stil | `app/globals.css` (tasarım token'ları + `vu-*` sınıfları) ve CSS Modules |
+| Font | Cormorant Garamond (başlık) + Jost (metin), `next/font` |
+| Veritabanı | Supabase Postgres (+ `vector`), Prisma şema katmanı — *henüz bağlı değil* |
+| Deneme görseli | Google Gemini, varsayılan Nano Banana 2 (`gemini-3.1-flash-image`) |
+| Görsel işleme | Tarayıcıda canvas (küçültme), sunucuda sharp (boyut kontrolü) |
 
 ---
 
@@ -51,37 +53,27 @@ npm run deneme-testi     # test/yuzler x test/urunler kalite testi → test/sonu
 
 ```
 app/
-  (main)/          Navbar'lı uygulama kabuğu
-    dene/          fotoğraf yükleme
-    katalog/       ürün ızgarası
-    try-on/        AI deneme sonuçları
-    favorilerim/
-    profil/
-  (auth)/          giris, kayit → AuthScreen
-  (admin)/         admin paneli (iskelet)
-  api/
-    try-on/        Gemini deneme görseli üretimi  ← tek deneme endpoint'i
-    favoriler/     yazıldı, DB yok, test edilmedi
-    oneriler/      yazıldı, DB yok, test edilmedi
-    moderation/    yazıldı, DB yok, test edilmedi
-    auth/callback/ Supabase OAuth dönüşü
+  page.tsx           ana sayfa: açılış, model şeridi, marka bölümleri, nasıl çalışır
+  ara/               arama: boşsa arama alanı, ?q / ?tip / ?marka ile sonuçlar, link eşleştirme
+  urun/[id]/         ürün sayfası + deneme paneli
+  gizlilik/          veri akışı metni (taslak, KVKK hukuki inceleme bekliyor)
+  api/try-on/        Gemini deneme görseli üretimi  ← tek API
 components/
-  studio/          CANLI tasarım dili — CSS değişkenleri + inline style
-  layout/          Navbar, Logo
-  ui/              button/card/input/sheet/skeleton — Tailwind + emerald
+  UstCubuk, Foto, UrunOgesi, Kelimeler, Hareket, Altbilgi
+  anasayfa/          ModelSeridi, MarkaBolumu, KaydirmaEtkisi (paralaks + büyüme)
+  arama/             AramaAlani
+  urun/              UrunGalerisi, UrunEylemleri
+  deneme/            DenemePaneli, OnceSonra, DenemeBaglami, fotografHazirla
 lib/
-  gemini-client.ts deneme görseli üretimi — model değişirse değişecek TEK dosya
-  studio-data.ts   ⚠ SAHTE ürün verisi (Faz 2'de DB ile değişecek)
-  sabitler.ts      renk/kumaş/stil listeleri, yükleme limitleri
-  oneri-motoru.ts  favori tabanlı öneri (DB bekliyor)
-  gorsel-isleme.ts sharp ile yeniden boyutlandırma/normalize
-  supabase-*.ts    sunucu ve tarayıcı istemcileri
-  clarifai-client.ts
+  katalog.ts         ⚠ SAHTE marka/ürün verisi + arama (Faz 2'de DB ile değişecek)
+  gemini-client.ts   deneme görseli üretimi — model değişirse değişecek TEK dosya
+  gorsel-isleme.ts   sunucuda fotoğraf kontrolü (biçim, boyut, çözünürlük)
+  hiz-limiti.ts      IP başına günlük deneme sınırı (bellekte)
+  fotograf-sinirlari.ts, link.ts
 prisma/
-  schema.prisma    ⚠ hiç migrate edilmedi
+  schema.prisma      Marka + Urun — ⚠ hiç migrate edilmedi
 docs/
-  BRIEF.md         vizyon, kurallar, fazlar
-  prototip/        orijinal HTML/JSX prototipi — sadece referans, import etme
+  BRIEF.md           vizyon, kurallar, fazlar
 ```
 
 ---
@@ -92,13 +84,13 @@ Bu tabloyu güncel tut. Bir şeyi gerçeğe çevirdiğinde satırı değiştir.
 
 | Alan | Durum |
 |---|---|
-| Deneme görseli üretimi | Gemini bağlı, **gerçek fotoğrafla doğrulanmadı** |
-| Ürün verisi | Sahte — `lib/studio-data.ts`, görseller picsum.photos |
-| Kimlik doğrulama | Sahte — `StudioProvider` + localStorage |
-| `middleware.ts` | Boş geçiş, Supabase kontrolü kapalı |
+| Arayüz | Gerçek — Claude Design'daki "Vualà" tasarım sistemine göre |
+| Deneme görseli üretimi | Gemini bağlı; prompt Gemini uygulamasında elle test edildi, **API üzerinden gerçek fotoğrafla doğrulanmadı** |
+| Ürün verisi | Sahte — `lib/katalog.ts`, 5 marka × 4 ürün, görsel yok (yer tutucu) |
+| Ürün görseli olmadan deneme | Sadece metin ipucuyla çalışır — kalite testi için anlamsız |
+| Arama | Katalog içinde kelime eşleştirme; link yapıştırılırsa katalogdaki `urunUrl` ile eşleşir |
+| Deneme sınırı | Bellekte; sunucusuz ortamda örnek başına ayrı sayar |
 | Veritabanı | Şema var, migration yok, tablo yok |
-| Favoriler / öneriler | API yazılmış, DB olmadığı için çalışmıyor |
-| Admin paneli | Sadece iskelet, "buraya gelecek" yazıyor |
 | PWA | Yok |
 
 ---
@@ -108,15 +100,12 @@ Bu tabloyu güncel tut. Bir şeyi gerçeğe çevirdiğinde satırı değiştir.
 ### 1. Kullanıcı fotoğrafı kalıcı hale getirilmez
 
 Kaynak yüz/boyun fotoğrafı **hiçbir koşulda** diske, veritabanına, object
-storage'a, log'a veya hata izleme servisine yazılmaz. Sadece istek süresince
-bellekte durur ve yanıt döndükten sonra biter.
+storage'a, log'a, hata izleme servisine veya tarayıcı depolamasına
+(`localStorage`, `sessionStorage`, IndexedDB) yazılmaz. Tarayıcıda sadece
+React belleğinde (`DenemeBaglami`) durur, sunucuda sadece istek süresince.
 
 Bu yüzden `app/api/upload` ve `STORAGE_BUCKET = "user-photos"` sabiti bilerek
 silindi. Geri ekleme.
-
-> **Bilinen ihlal:** `components/studio/StudioProvider.tsx` fotoğrafı base64
-> olarak `localStorage`'a (`bs-photo`) yazıyor. Faz 3'te kaldırılacak.
-> Yeni kod bu deseni çoğaltmasın.
 
 ### 2. Gemini'ye giden veri bilinçli bir karardır
 
@@ -144,17 +133,28 @@ Bir yaklaşımı terk ediyorsan aynı commit'te sil. Git geçmişi zaten saklıy
 ## Konvansiyonlar
 
 **İsimlendirme Türkçe.** Klasör, dosya, fonksiyon ve değişkenler Türkçe:
-`katalog`, `favoriler`, `oneriGetir`, `resmIsle`, `sabitler`. İstisna, yerleşmiş
-ürün terimleri: `try-on`, `studio`, `slug`.
+`katalog`, `urunGetir`, `denemeHakkiKullan`, `fotografHazirla`. İstisna,
+yerleşmiş ürün terimleri: `try-on`, `slug`.
 
-**İki tasarım dili var, farkına var.** `components/studio/*` ve `(main)`
-sayfaları CSS değişkenleri + inline `style` kullanıyor (zeytin/bej/bordo
-paleti). `components/ui/*`, `loading.tsx`, `not-found.tsx` ve admin ise Tailwind
-+ emerald kullanıyor. **Yeni kullanıcı arayüzü studio dilini takip eder.**
-Admin tarafı şimdilik Tailwind'de kalabilir.
+**Tek tasarım dili.** Kaynak, Claude Design'daki "Vualà" tasarım sistemi
+(https://claude.ai/artifact/QquTLmH19kjXwNcEWtD6YX). Renk, tipografi, boşluk
+ve hareket değerleri oradan birebir `app/globals.css` `:root` içine alındı.
+Tailwind yok.
 
-Palet `app/globals.css` `:root` içinde: `--bg`, `--ink`, `--green`, `--wine`,
-`--line`, `--cream` ve `--radius-*`, `--ease-*`.
+- Paylaşılan parçalar `globals.css` içinde `vu-` önekli sınıflar: `vu-btn`,
+  `vu-chip`, `vu-item`, `vu-ph` (fotoğraf/yer tutucu), `vu-search`,
+  `vu-display`, `vu-label`, `vu-reveal`, `vu-words`.
+- Sayfaya/bileşene özel yerleşim, yanındaki `*.module.css` dosyasında.
+- Sadece altı marka rengi: `--bordo`, `--sarap`, `--ahududu`, `--gul`,
+  `--pudra`, `--kirik-beyaz`. Anlamsal adlar (`--ink`, `--surface-deep` …)
+  bunlara bağlı. `--ahududu` çok az kullanılır; pudra veya bordo üzerinde
+  yazı rengi olmaz.
+- Köşe yok (`--radius-none`), gölge yok. Mobil kırılım 900px.
+- Hareket: mobilde sadece belirme (`vu-reveal`, `vu-words`) ve model şeridi;
+  paralaks/büyüme sadece masaüstünde. `prefers-reduced-motion` her şeyi durdurur.
+- Kullanıcıya "sen" diye hitap edilir. Sabit cümleler (fotoğraf saklanmaz,
+  saçı açık fotoğraf uyarısı, "Yapay zekâ ile oluşturuldu", "Satın alma
+  X'in sitesinde yapılır") tasarım sistemindeki gibi birebir kalır.
 
 **Yorum yazma alışkanlığı.** Sadece *neden* açık değilse yorum yaz. Ne yaptığını
 anlatan yorum yazma.
@@ -163,16 +163,16 @@ anlatan yorum yazma.
 
 ## Tuzaklar
 
-- `lib/studio-data.ts` içindeki `StudioProduct.id` **number**, Prisma
-  `Product.id` ise **uuid string**. Faz 2'de DB'ye geçerken burası kırılacak.
-- `oneri-motoru.ts` Supabase tablolarını `"Product"`, `"Favorite"` gibi
-  büyük harfle sorguluyor; Prisma'nın ürettiği tablo adlarıyla eşleştiğini
-  migration sonrası doğrula.
-- `clarifai-client.ts` bir **URL** alıyor. Sıfır-saklama politikasında ortada
-  URL yok — byte/base64 alacak şekilde değiştirilmesi gerekiyor (Faz 1).
-- `lib/studio-data.ts` ürün görselleri **picsum.photos**'tan geliyor, yani
-  başörtüsü değil rastgele stok fotoğraf. `/api/try-on` artık ürün görselini
-  de Gemini'ye gönderdiği için, sahte veriyle yapılan test **anlamsızdır** —
-  gerçek ürün fotoğrafıyla `npm run deneme-testi` kullan.
+- Markaların Türkçe ekleri (`'daki`, `'nın`) yabancı isimlerde hesaplanamıyor;
+  `lib/katalog.ts` ve şemada elle tutuluyor. Yeni marka eklerken doldur.
+- Ürün tipi (`sal` / `esarp`) prompt'ta bağlama şeklini belirliyor ve satıcı
+  açıklamasından gelir. `/api/try-on` tipi ve görseli istemciden değil
+  katalogdan alır; istemciye güvenme.
+- Katalogda ürün görseli yok, bu yüzden `/api/try-on` şu an sadece metin
+  ipucuyla çalışır. Kalite testi için gerçek ürün fotoğrafıyla
+  `npm run deneme-testi` kullan (ürün dosya adı `sal-` veya `esarp-` ile
+  başlamalı).
+- Deneme görseli ücretli (görsel başı ~$0.067). Geliştirirken `/api/try-on`'a
+  gerçek fotoğraf göndermek bakiyeden düşer.
 - Deneme sonucu 60 sn sürebilir (`maxDuration = 60`). Vercel Hobby planında
   limit daha düşük; deploy öncesi kontrol et.

@@ -1,0 +1,151 @@
+/* ---------- boş arama ---------- */
+.giris {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+.girisIc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px var(--gutter) 72px;
+}
+.girisBaslik {
+  margin: 0 0 36px;
+}
+
+/* ---------- sonuçlar ---------- */
+.ust {
+  padding: 8px var(--gutter) 0;
+}
+.filtreler {
+  margin: 18px calc(var(--gutter) * -1) 0;
+  padding: 0 var(--gutter);
+}
+.ayrac {
+  flex: none;
+  width: 1px;
+  background: var(--line);
+  margin: 6px 4px;
+}
+.sayi {
+  margin: 28px 0 16px;
+}
+.sonuclar,
+.benzerler {
+  padding: 0 var(--gutter) 48px;
+}
+.izgara {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 12px;
+}
+.hucre:nth-child(even) {
+  margin-top: 40px;
+}
+.bos {
+  padding: 56px var(--gutter) 40px;
+  max-width: 560px;
+}
+.bos p {
+  margin: 16px 0 0;
+}
+
+.bulunan {
+  padding: 40px var(--gutter) 56px;
+}
+.bulunan > :global(.vu-label) {
+  margin: 0 0 20px;
+}
+.bulunanIc {
+  display: grid;
+  gap: 24px;
+}
+.bulunanFoto {
+  display: block;
+}
+.bulunanIc :global(.vu-display) {
+  margin: 8px 0 0;
+}
+.fiyat {
+  margin: 12px 0 24px;
+}
+.benzerBaslik {
+  margin: 0 0 32px;
+}
+
+@media (min-width: 900px) {
+  .girisIc {
+    width: min(880px, 100%);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .girisBaslik {
+    margin-bottom: 56px;
+    text-align: center;
+  }
+
+  .ust {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding-top: 16px;
+  }
+  .filtreler {
+    margin: 0;
+    padding: 0;
+  }
+
+  .sonuclar,
+  .benzerler {
+    padding: 0 var(--gutter) var(--space-9);
+  }
+  .sayi {
+    margin: 48px 0 28px;
+  }
+  .izgara {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 56px 24px;
+    grid-auto-flow: dense;
+  }
+  .hucre:nth-child(even) {
+    margin-top: 0;
+  }
+  /* Dergi ritmi: arada bir ürün 2x2 büyük gösterilir. */
+  .hucre:nth-child(7n + 1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .hucre:nth-child(7n + 1) :global(.vu-item) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .hucre:nth-child(7n + 1) :global(.vu-ph) {
+    flex: 1;
+    aspect-ratio: auto;
+    min-height: 400px;
+  }
+
+  .bos {
+    padding: 96px var(--gutter) 56px;
+  }
+  .bulunan {
+    padding: 72px var(--gutter) var(--space-9);
+  }
+  .bulunan > :global(.vu-label) {
+    margin-bottom: 28px;
+  }
+  .bulunanIc {
+    grid-template-columns: 560px 400px;
+    gap: 96px;
+    align-items: end;
+  }
+  .fiyat {
+    margin: 16px 0 36px;
+  }
+  .benzerBaslik {
+    margin-bottom: 48px;
+  }
+}

@@ -1,0 +1,32 @@
+.dock,
+.blok {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dock p,
+.blok p {
+  margin: 4px 0 0;
+  text-align: center;
+}
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  padding: 14px var(--gutter) 16px;
+  background: rgba(255, 249, 248, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .dock {
+    position: static;
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+  }
+}

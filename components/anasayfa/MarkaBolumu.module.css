@@ -1,0 +1,86 @@
+.bolum {
+  padding: var(--space-8) 0 56px;
+  overflow: hidden;
+}
+.bas {
+  padding: 0 var(--gutter);
+}
+.ust {
+  margin: 0 0 14px;
+  color: var(--ink-muted);
+}
+:global(.vu-deep) .ust {
+  color: var(--ink-on-deep-muted);
+}
+.baslik {
+  font-size: 40px;
+  line-height: 1;
+  margin: 0 0 32px;
+  max-width: 340px;
+}
+:global(.vu-deep) .baslik {
+  color: var(--pudra);
+}
+.ray {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--gutter);
+  padding: 0 var(--gutter);
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.ray::-webkit-scrollbar {
+  display: none;
+}
+.oge {
+  flex: 0 0 62%;
+  scroll-snap-align: start;
+}
+.tumuMobil {
+  padding: 28px var(--gutter) 0;
+  text-align: right;
+}
+.tumuMasaustu {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .bolum {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    padding: 140px 0 140px var(--gutter);
+  }
+  .bas {
+    position: relative;
+    z-index: 2;
+    padding: 0;
+  }
+  .ust {
+    margin-bottom: 20px;
+  }
+  .baslik {
+    font-size: 96px;
+    line-height: 0.92;
+    max-width: none;
+    margin: 0 -140px 40px 0;
+  }
+  .tumuMasaustu {
+    display: block;
+  }
+  .tumuMobil {
+    display: none;
+  }
+  .ray {
+    gap: 24px;
+    padding: 120px var(--gutter) 0 0;
+    scroll-padding: 0;
+  }
+  .oge {
+    flex: 0 0 300px;
+  }
+  .oge:nth-child(even) {
+    margin-top: -60px;
+  }
+}

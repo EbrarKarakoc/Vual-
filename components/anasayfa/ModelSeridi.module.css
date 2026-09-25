@@ -1,0 +1,35 @@
+.pist {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pist::-webkit-scrollbar {
+  display: none;
+}
+.serit {
+  display: flex;
+  gap: 14px;
+  height: 320px;
+  width: max-content;
+  padding-left: var(--gutter);
+  animation: vu-drift 60s linear infinite;
+}
+.pist:hover .serit,
+.pist:active .serit {
+  animation-play-state: paused;
+}
+.model {
+  flex: none;
+  height: calc(var(--h) * 1px);
+  aspect-ratio: 0.66;
+}
+
+@media (min-width: 900px) {
+  .serit {
+    gap: 28px;
+    height: 540px;
+    animation-duration: 80s;
+  }
+  .model {
+    height: calc(var(--h) * 1.8px);
+  }
+}

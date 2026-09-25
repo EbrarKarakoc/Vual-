@@ -1,14 +1,19 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { UstCubuk } from "@/components/UstCubuk";
 
-export default function NotFound() {
+export default function Bulunamadi() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
-      <h1 className="text-6xl font-serif text-emerald-700 mb-2">404</h1>
-      <p className="text-lg text-black/70 mb-6">Aradığın sayfa bulunamadı.</p>
-      <Link href="/">
-        <Button>Ana Sayfaya Dön</Button>
-      </Link>
-    </div>
+    <>
+      <UstCubuk />
+      <main style={{ padding: "96px var(--gutter)", maxWidth: 720 }}>
+        <p className="vu-label vu-muted">404</p>
+        <h1 className="vu-display vu-xl" style={{ margin: "12px 0 32px" }}>
+          Bu sayfa yok.
+        </h1>
+        <Link className="vu-btn vu-btn--primary" href="/">
+          Ana sayfaya dön
+        </Link>
+      </main>
+    </>
   );
 }

@@ -1,0 +1,27 @@
+.buyuk {
+  width: 100%;
+}
+.kucuk {
+  width: 100%;
+}
+.ipucu {
+  min-height: 21px;
+  margin: 10px 0 18px;
+}
+.oneriler {
+  flex-wrap: wrap;
+}
+
+@media (min-width: 900px) {
+  .ipucu {
+    text-align: center;
+    margin: 12px 0 28px;
+  }
+  .oneriler {
+    justify-content: center;
+  }
+  .kucuk {
+    flex: 0 0 480px;
+    width: auto;
+  }
+}

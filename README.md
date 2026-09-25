@@ -13,11 +13,12 @@ gör, kararını ondan sonra ver.
 
 ## Nasıl çalışıyor
 
-**1. Fotoğrafını yükle** — Bir kez, düz bir ışıkta çekilmiş normal bir fotoğraf
-yeterli.
+**1. Fotoğrafını yükle** — Karşıdan, yüzünün net göründüğü normal bir fotoğraf
+yeterli. Hesap açman gerekmiyor.
 
-**2. Beğendiklerini seç** — Farklı markaların şallarını, bonelerini ve
-eşarplarını tek katalogda gez. Renge, kumaşa, stile göre filtrele.
+**2. Beğendiklerini seç** — Farklı markaların şallarını ve eşarplarını tek
+yerde gez. İstediğin tarzı yaz ya da başka bir sitede gördüğün şalın linkini
+yapıştır.
 
 **3. Üzerinde gör** — Yapay zekâ, seçtiğin ürünün gerçek kumaşını, desenini ve
 rengini senin fotoğrafına giydiriyor. Manken değil, sen.
@@ -32,14 +33,15 @@ Bu, üzerine en çok düşündüğümüz kısım.
 
 - **Fotoğrafını saklamıyoruz.** Sunucumuza kaydedilmiyor, veritabanımıza
   yazılmıyor. Deneme bittiği anda siliniyor.
-- **Çalınacak veri yok**, çünkü tutulan veri yok.
-- Kaydetmeyi seçtiğin deneme görselleri şifreli tutuluyor — senden başkası
-  açamaz, biz dahil.
+- **Çalınacak veri yok**, çünkü tutulan veri yok. Hesap da yok: adını,
+  e-postanı istemiyoruz.
+- Deneme görselini de saklamıyoruz. İstersen kendi cihazına indirirsin.
 - Hiçbir görselin izin vermeden kimseye gösterilmez, hiçbir yerde
   yayınlanmaz.
 
-Fotoğrafını her seferinde tekrar yüklemen gerekiyor. Bunu bilerek böyle
-tasarladık: mahremiyetin, kolaylıktan önce geliyor.
+Sayfayı kapattığında fotoğrafın da gider; bir sonraki gelişinde tekrar
+yüklersin. Bunu bilerek böyle tasarladık: mahremiyetin, kolaylıktan önce
+geliyor.
 
 ---
 
